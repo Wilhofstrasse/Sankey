@@ -321,7 +321,18 @@ function scaledPNG(scale) {
 
   // Set the canvas element to the final height/width the user wants.
   // NOTE: THIS CAN FAIL. Canvases have maximum dimensions and a max area.
-  // TODO: Disable any export buttons which will fail silently.
+  // Browser limits vary, but typically ~16384px per dimension or ~268M total pixels.
+  const MAX_CANVAS_DIMENSION = 16384,
+    MAX_CANVAS_AREA = 268435456; // 2^28 pixels
+
+  if (scaled.w > MAX_CANVAS_DIMENSION || scaled.h > MAX_CANVAS_DIMENSION
+      || scaled.w * scaled.h > MAX_CANVAS_AREA) {
+    throw new Error(
+      `Canvas size ${scaled.w}x${scaled.h} exceeds browser limits. `
+      + 'Try a smaller scale factor.'
+    );
+  }
+
   canvasEl.width = scaled.w;
   canvasEl.height = scaled.h;
 
@@ -357,11 +368,20 @@ function downloadADataURL(dataURL, name) {
 }
 
 glob.saveDiagramAsPNG = (scale) => {
-  const [size, pngURL] = scaledPNG(scale);
-  downloadADataURL(
-    pngURL,
-    `sankeymatic_${glob.fileTimestamp()}_${size.w}x${size.h}.png`
-  );
+  try {
+    const [size, pngURL] = scaledPNG(scale);
+    downloadADataURL(
+      pngURL,
+      `sankeymatic_${glob.fileTimestamp()}_${size.w}x${size.h}.png`
+    );
+  } catch (error) {
+    msg.add(
+      `Error exporting PNG: ${escapeHTML(error.message || 'Unknown error')}. `
+      + 'The diagram may be too large for this resolution.',
+      'issue'
+    );
+    console.error('PNG export error:', error);
+  }
 };
 
 // downloadATextFile: given a string & a filename, send it to the user:
@@ -375,22 +395,30 @@ function downloadATextFile(txt, name) {
 // saveDiagramAsSVG: take the current state of 'sankey_svg' and relay
 // it nicely to the user
 glob.saveDiagramAsSVG = () => {
-  // Make a copy of the true SVG & make a few cosmetic changes:
-  const svgForExport
-  = el('sankey_svg').outerHTML
-    // Take out the id and the class declaration for the background:
-    .replace(' id="sankey_svg"', '')
-    .replace(/ class="svg_background_[a-z]+"/, '')
-    // Add a title placeholder & credit comment after the FIRST tag:
-    .replace(
-      />/,
-      '>\r\n<title>Your Diagram Title</title>\r\n'
-          + `<!-- Generated with SankeyMATIC: ${glob.humanTimestamp()} -->\r\n`
-      )
-    // Add some line breaks to highlight where [g]roups start/end
-    // and where each path/text/rect begins:
-    .replace(/><(g|\/g|path|text|rect)/g, '>\r\n<$1');
-  downloadATextFile(svgForExport, `sankeymatic_${glob.fileTimestamp()}.svg`);
+  try {
+    // Make a copy of the true SVG & make a few cosmetic changes:
+    const svgForExport
+    = el('sankey_svg').outerHTML
+      // Take out the id and the class declaration for the background:
+      .replace(' id="sankey_svg"', '')
+      .replace(/ class="svg_background_[a-z]+"/, '')
+      // Add a title placeholder & credit comment after the FIRST tag:
+      .replace(
+        />/,
+        '>\r\n<title>Your Diagram Title</title>\r\n'
+            + `<!-- Generated with SankeyMATIC: ${glob.humanTimestamp()} -->\r\n`
+        )
+      // Add some line breaks to highlight where [g]roups start/end
+      // and where each path/text/rect begins:
+      .replace(/><(g|\/g|path|text|rect)/g, '>\r\n<$1');
+    downloadATextFile(svgForExport, `sankeymatic_${glob.fileTimestamp()}.svg`);
+  } catch (error) {
+    msg.add(
+      `Error exporting SVG: ${escapeHTML(error.message || 'Unknown error')}`,
+      'issue'
+    );
+    console.error('SVG export error:', error);
+  }
 };
 
 // MARK SVG path specification functions
@@ -1934,11 +1962,19 @@ glob.loadDiagramFile = async () => {
   // Did the user provide a file?
   if (fileList.length === 0) { return; }
 
-  // Read the file's text contents:
-  const uploadedText = await fileList[0].text(),
-    userFileName = fileList[0].name;
-  setUpNewInputs(uploadedText, highlightSafeValue(userFileName));
-  glob.process_sankey();
+  try {
+    // Read the file's text contents:
+    const uploadedText = await fileList[0].text(),
+      userFileName = fileList[0].name;
+    setUpNewInputs(uploadedText, highlightSafeValue(userFileName));
+    glob.process_sankey();
+  } catch (error) {
+    msg.add(
+      `Error reading file: ${escapeHTML(error.message || 'Unknown error')}`,
+      'issue'
+    );
+    console.error('File read error:', error);
+  }
 };
 
 // MARK dialog functions
@@ -1976,27 +2012,35 @@ glob.copyGeneratedLink = () => {
  * in the URL parameters. If found, load it.
  */
 function loadFromQueryString() {
-  const searchString = glob.location?.search;
-  if (searchString) {
-    const compressedInputs
-      = new URLSearchParams(searchString)?.get(urlInputsParam);
-    if (compressedInputs) {
-      const expandedInputs
-        = LZString.decompressFromEncodedURIComponent(compressedInputs);
-      // Make sure the input was successfully read.
-      // (LZstring gives back a blank string or a null when it fails):
-      if (expandedInputs) {
-        setUpNewInputs(expandedInputs, 'URL');
-      } else {
-        // Tell the user something went wrong:
-        msg.addToQueue(
-          `The input string provided in the URL
+  try {
+    const searchString = glob.location?.search;
+    if (searchString) {
+      const compressedInputs
+        = new URLSearchParams(searchString)?.get(urlInputsParam);
+      if (compressedInputs) {
+        const expandedInputs
+          = LZString.decompressFromEncodedURIComponent(compressedInputs);
+        // Make sure the input was successfully read.
+        // (LZstring gives back a blank string or a null when it fails):
+        if (expandedInputs) {
+          setUpNewInputs(expandedInputs, 'URL');
+        } else {
+          // Tell the user something went wrong:
+          msg.addToQueue(
+            `The input string provided in the URL
 (${highlightSafeValue(`${compressedInputs.substring(0, 8)}...`)})
 was not decodable.`,
-          'issue'
-        );
+            'issue'
+          );
+        }
       }
     }
+  } catch (error) {
+    msg.addToQueue(
+      `Error loading diagram from URL: ${escapeHTML(error.message || 'Unknown error')}`,
+      'issue'
+    );
+    console.error('URL loading error:', error);
   }
 }
 
@@ -2132,10 +2176,20 @@ style="background-color: ${swRGB};">&nbsp;</span>`
     delete nodeParams.name;
     delete nodeParams.sourceRow;
 
-    // If there's a color and it's a color CODE, put back the #:
-    // TODO: honor or translate color names?
-    if (reBareColor.test(nodeParams.color)) {
-      nodeParams.color = `#${nodeParams.color}`;
+    // If there's a color, process it:
+    // - If it's a bare hex code (without #), add the #
+    // - If it's a CSS color name (like 'red', 'blue'), translate to hex
+    if (nodeParams.color) {
+      if (reBareColor.test(nodeParams.color)) {
+        nodeParams.color = `#${nodeParams.color}`;
+      } else if (!reRGBColor.test(nodeParams.color)) {
+        // Might be a CSS color name - try to parse it with d3
+        const parsedColor = d3.color(nodeParams.color);
+        if (parsedColor) {
+          nodeParams.color = parsedColor.formatHex();
+        }
+        // If parsing failed, leave as-is; validation elsewhere will catch it
+      }
     }
 
     // Is the user providing a custom label?
@@ -2441,12 +2495,31 @@ ${escapeHTML(lineIn)}`
           `Attribute type <code>${attrName}</code> is not valid for Nodes`
         );
       } else if (currentObject.type === NODE_OBJ) {
-        // TODO: Verify the syntax of the value
-        // Apply the new value to the existing object:
-        updateNodeAttrs({
-          name: currentObject.name,
-          [attrName]: attrValue,
-        })
+        // Validate the attribute value based on the attribute type
+        let isValidValue = true;
+        if (attrName === 'opacity') {
+          // Opacity should be a decimal between 0 and 1
+          const opacityVal = parseFloat(attrValue);
+          if (isNaN(opacityVal) || opacityVal < 0 || opacityVal > 1) {
+            warnAbout(attrValue, 'Opacity must be a number between 0 and 1');
+            isValidValue = false;
+          }
+        } else if (attrName === 'color') {
+          // Color should be a valid hex or CSS color name
+          if (!reBareColor.test(attrValue)
+              && !reRGBColor.test(attrValue)
+              && !d3.color(attrValue)) {
+            warnAbout(attrValue, 'Invalid color value');
+            isValidValue = false;
+          }
+        }
+        // Apply the new value to the existing object if valid:
+        if (isValidValue) {
+          updateNodeAttrs({
+            name: currentObject.name,
+            [attrName]: attrValue,
+          });
+        }
       } else {
         warnAbout(lineIn, `Unsupported object type '${currentObject.type}'`)
       }
@@ -2460,8 +2533,67 @@ ${escapeHTML(lineIn)}`
       );
   });
 
-  // TODO: Disable useless precision checkbox if maxDecimalPlaces === 0
-  // TODO: Look for cycles and post errors about them
+  // Disable the 'full precision' checkbox if there are no decimal places
+  const precisionCheckbox = el('labelvalue_fullprecision');
+  if (precisionCheckbox) {
+    precisionCheckbox.disabled = (maxDecimalPlaces === 0);
+  }
+
+  // Check for cycles in the graph and warn if any are found
+  function detectCycles(flows) {
+    const nodeOutgoing = new Map();
+    flows.forEach((f) => {
+      if (!nodeOutgoing.has(f.source)) {
+        nodeOutgoing.set(f.source, new Set());
+      }
+      nodeOutgoing.get(f.source).add(f.target);
+    });
+
+    const visited = new Set();
+    const recursionStack = new Set();
+    const cycleNodes = [];
+
+    function hasCycle(node, path) {
+      if (recursionStack.has(node)) {
+        cycleNodes.push(...path, node);
+        return true;
+      }
+      if (visited.has(node)) return false;
+
+      visited.add(node);
+      recursionStack.add(node);
+
+      const neighbors = nodeOutgoing.get(node) || new Set();
+      for (const neighbor of neighbors) {
+        if (hasCycle(neighbor, [...path, node])) {
+          return true;
+        }
+      }
+
+      recursionStack.delete(node);
+      return false;
+    }
+
+    for (const node of nodeOutgoing.keys()) {
+      if (hasCycle(node, [])) {
+        return cycleNodes;
+      }
+    }
+    return null;
+  }
+
+  const cycleResult = detectCycles(goodFlows);
+  if (cycleResult && cycleResult.length > 0) {
+    const cycleNodeNames = cycleResult
+      .map((n) => typeof n === 'string' ? n : n)
+      .join(' → ');
+    msg.add(
+      `Warning: Cycle detected in the graph. `
+      + `Sankey diagrams work best with directed acyclic graphs. `
+      + `Cycle path: ${escapeHTML(cycleNodeNames)}`,
+      'issue'
+    );
+  }
 
   // Mention any un-parseable lines:
   invalidLines.forEach((parsingError) => {

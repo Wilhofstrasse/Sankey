@@ -48,15 +48,15 @@
 <h4>Sample Diagrams &amp; Starting Points:</h4>
 <div class="hs-md-vs gap-tiny">
 <div class="hs space-between">
-<button type="button" id="load_example_simple" onclick="replaceGraph('simple_start'); return false;">Start Simple</button>
-<button type="button" id="load_example_financial_results" onclick="replaceGraph('financial_results'); return false;">Financial Results</button>
-<button type="button" id="load_example_job_search" onclick="replaceGraph('job_search'); return false;">Job Search</button>
+<button type="button" id="load_example_simple" onclick="replaceGraph('simple_start'); return false;" aria-label="Load simple starting diagram">Start Simple</button>
+<button type="button" id="load_example_financial_results" onclick="replaceGraph('financial_results'); return false;" aria-label="Load financial results example">Financial Results</button>
+<button type="button" id="load_example_job_search" onclick="replaceGraph('job_search'); return false;" aria-label="Load job search example">Job Search</button>
 </div>
 <div class="hs space-between">
 <!-- <button type="button" id="load_example_energy_all" onclick="replaceGraph('energy_flows_all'); return false;">Energy Flows</button> &nbsp; -->
-<button type="button" id="load_example_journey" onclick="replaceGraph('journey'); return false;">Journey</button>
-<button type="button" id="load_example_election" onclick="replaceGraph('election'); return false;">Ranked Election</button>
-<button type="button" id="load_example_basic_budget" onclick="replaceGraph('default_budget'); return false;">Budget</button>
+<button type="button" id="load_example_journey" onclick="replaceGraph('journey'); return false;" aria-label="Load journey example">Journey</button>
+<button type="button" id="load_example_election" onclick="replaceGraph('election'); return false;" aria-label="Load ranked election example">Ranked Election</button>
+<button type="button" id="load_example_basic_budget" onclick="replaceGraph('default_budget'); return false;" aria-label="Load budget example">Budget</button>
 </div>
 </div>
 </div>
@@ -165,7 +165,7 @@ Labels<span id="label_options_hint">...</span></h2>
 <label for="labelname_appears" class="ropt">Show <strong>Names</strong></label></span>
 
 <span class="no_wrap" onmouseover="revealVal('labelname_weight');" onmouseout="fadeVal('labelname_weight');"><label for="labelname_weight" class="sr-only">Style for Node Names</label>
-<span class="smalllabel font_light">Light</span><span class="output_container"><input id="labelname_weight" class="slider_xsmall" type="range" min="100" max="700" step="300" value="400" list="tick400" onfocus="revealVal('labelname_weight');" onblur="fadeVal('labelname_weight');" oninput="updateOutput('labelname_weight'); process_sankey();" onchange="process_sankey();"><output id="labelname_weight_val" for="labelname_weight" class="fade-init output_6">-</output></span><span class="smalllabel font_bolder">Bold</span></span>
+<span class="smalllabel font_light">Light</span><span class="output_container"><input id="labelname_weight" class="slider_xsmall" type="range" min="100" max="700" step="300" value="400" list="tick400" onfocus="revealVal('labelname_weight');" onblur="fadeVal('labelname_weight');" oninput="updateOutput('labelname_weight'); process_sankey();" onchange="process_sankey();"><output id="labelname_weight_val" for="labelname_weight" class="fade-init output_6" aria-live="polite">-</output></span><span class="smalllabel font_bolder">Bold</span></span>
 </div>
 
 <div class="hs align-baseline gap-medium">
@@ -173,7 +173,7 @@ Labels<span id="label_options_hint">...</span></h2>
 <label for="labelvalue_appears" class="ropt">Show <strong>Values</strong></label></span>
 
 <span class="no_wrap" onmouseover="revealVal('labelvalue_weight');" onmouseout="fadeVal('labelvalue_weight');"><label for="labelvalue_weight" class="sr-only">Style for Node Values</label>
-<span class="smalllabel font_light">Light</span><span class="output_container"><input id="labelvalue_weight" class="slider_xsmall" type="range" min="100" max="700" step="300" value="400" list="tick400" onfocus="revealVal('labelvalue_weight');" onblur="fadeVal('labelvalue_weight');" oninput="updateOutput('labelvalue_weight'); process_sankey();" onchange="process_sankey();"><output id="labelvalue_weight_val" for="labelvalue_weight" class="fade-init output_6">-</output></span><span class="smalllabel font_bolder">Bold</span></span>
+<span class="smalllabel font_light">Light</span><span class="output_container"><input id="labelvalue_weight" class="slider_xsmall" type="range" min="100" max="700" step="300" value="400" list="tick400" onfocus="revealVal('labelvalue_weight');" onblur="fadeVal('labelvalue_weight');" oninput="updateOutput('labelvalue_weight'); process_sankey();" onchange="process_sankey();"><output id="labelvalue_weight_val" for="labelvalue_weight" class="fade-init output_6" aria-live="polite">-</output></span><span class="smalllabel font_bolder">Bold</span></span>
 </div>
 </div>
 
@@ -198,7 +198,7 @@ Labels<span id="label_options_hint">...</span></h2>
 <label for="labels_relativesize" title="Set relative size of Names and Values">Magnify:</label>
 <div class="hs align-center gap-small no_wrap">
     <div class="align-center"><strong>Names</strong></div>
-    <span class="output_container"><input id="labels_relativesize" class="slider_small" type="range" min="50" max="150" value="110" list="tick100" onfocus="revealVal('labels_relativesize');" onblur="fadeVal('labels_relativesize');" oninput="updateOutput('labels_relativesize'); process_sankey();" onchange="process_sankey();"><output id="labels_relativesize_val" for="labels_relativesize" class="fade-init output_12">-</output></span>
+    <span class="output_container"><input id="labels_relativesize" class="slider_small" type="range" min="50" max="150" value="110" list="tick100" onfocus="revealVal('labels_relativesize');" onblur="fadeVal('labels_relativesize');" oninput="updateOutput('labels_relativesize'); process_sankey();" onchange="process_sankey();"><output id="labels_relativesize_val" for="labels_relativesize" class="fade-init output_12" aria-live="polite">-</output></span>
     <div class="align-center"><strong>Values</strong></div>
 </div>
 </div>
@@ -208,7 +208,7 @@ Labels<span id="label_options_hint">...</span></h2>
     <label for="labels_magnify">Show larger labels for:</label>
     <div class="hs justify-center gap-small no_wrap">
         <div class="align-center"><strong>Small</strong><br>Amounts</div>
-        <span class="output_container"><input id="labels_magnify" class="slider_medium" type="range" min="50" max="150" value="100" list="tick100" onfocus="revealVal('labels_magnify');" onblur="fadeVal('labels_magnify');" oninput="updateOutput('labels_magnify'); process_sankey();" onchange="process_sankey();"><output id="labels_magnify_val" for="labels_magnify" class="fade-init output_12">-</output></span>
+        <span class="output_container"><input id="labels_magnify" class="slider_medium" type="range" min="50" max="150" value="100" list="tick100" onfocus="revealVal('labels_magnify');" onblur="fadeVal('labels_magnify');" oninput="updateOutput('labels_magnify'); process_sankey();" onchange="process_sankey();"><output id="labels_magnify_val" for="labels_magnify" class="fade-init output_12" aria-live="polite">-</output></span>
         <div class="align-center"><strong>Large</strong><br>Amounts</div>
     </div>
 </div>
@@ -217,7 +217,7 @@ Labels<span id="label_options_hint">...</span></h2>
 <label for="labels_linespacing" id="spacing_fld_label"><strong>Line Spacing:</strong></label>
 <span class="nowrap">
 <span class="smalllabel">Min</span>
-<span class="output_container"><input id="labels_linespacing" class="slider_medium" type="range" min="0.0" max="1.0" step="0.05" value="0.2" onfocus="revealVal('labels_linespacing');" onblur="fadeVal('labels_linespacing');" oninput="updateOutput('labels_linespacing'); process_sankey();" onchange="process_sankey();"><output id="labels_linespacing_val" for="labels_linespacing" class="fade-init output_3">-</output></span>
+<span class="output_container"><input id="labels_linespacing" class="slider_medium" type="range" min="0.0" max="1.0" step="0.05" value="0.2" onfocus="revealVal('labels_linespacing');" onblur="fadeVal('labels_linespacing');" oninput="updateOutput('labels_linespacing'); process_sankey();" onchange="process_sankey();"><output id="labels_linespacing_val" for="labels_linespacing" class="fade-init output_3" aria-live="polite">-</output></span>
 <span class="smalllabel">Max</span>
 </span>
 </div>
@@ -239,7 +239,7 @@ When a Node has an <strong>empty side</strong>, place its label there.
 <label for="labelposition_autoalign" style="line-height: 2;">When neither side is empty, place labels:</label>
 <div class="hs align-center justify-center gap-small">
 <div class="align-center no_wrap"><strong>Before</strong><br>the Node</div>
-<span class="output_container"><input id="labelposition_autoalign" class="slider_medium" type="range" min="-1" max="1" step="1" value="0" onfocus="revealVal('labelposition_autoalign');" onblur="fadeVal('labelposition_autoalign');" oninput="updateOutput('labelposition_autoalign'); checkRadio('label_scheme_auto'); process_sankey();" onchange="checkRadio('label_scheme_auto'); process_sankey();" list="tick-align"><output id="labelposition_autoalign_val" for="labelposition_autoalign" class="fade-init output_6">-</output></span>
+<span class="output_container"><input id="labelposition_autoalign" class="slider_medium" type="range" min="-1" max="1" step="1" value="0" onfocus="revealVal('labelposition_autoalign');" onblur="fadeVal('labelposition_autoalign');" oninput="updateOutput('labelposition_autoalign'); checkRadio('label_scheme_auto'); process_sankey();" onchange="checkRadio('label_scheme_auto'); process_sankey();" list="tick-align"><output id="labelposition_autoalign_val" for="labelposition_autoalign" class="fade-init output_6" aria-live="polite">-</output></span>
 <div class="align-center no_wrap"><strong>After</strong><br>the Node</div>
 </div>
 </div>
@@ -262,7 +262,7 @@ When a Node has an <strong>empty side</strong>, place its label there.
 <div class="vs align-center justify-center text_center" onmouseover="revealVal('labelposition_breakpoint');" onmouseout="fadeVal('labelposition_breakpoint');">
 <label for="labelposition_breakpoint" style="line-height: 2;">Place labels on the <strong>opposite side</strong> starting at:</label>
 <div class="hs align-center justify-center gap-small">
-<span class="no_wrap">Stage <strong>2</strong></span><span class="output_container"><input id="labelposition_breakpoint" class="slider_medium" type="range" min="2" max="4" step="1" value="4" onfocus="revealVal('labelposition_breakpoint');" onblur="fadeVal('labelposition_breakpoint');" oninput="updateOutput('labelposition_breakpoint'); checkRadio('label_scheme_perstage'); process_sankey();" onchange="checkRadio('label_scheme_perstage'); process_sankey();" list="tick-stages"><output id="labelposition_breakpoint_val" for="labelposition_breakpoint" class="fade-init output_12">-</output></span><span>(Never)</span>
+<span class="no_wrap">Stage <strong>2</strong></span><span class="output_container"><input id="labelposition_breakpoint" class="slider_medium" type="range" min="2" max="4" step="1" value="4" onfocus="revealVal('labelposition_breakpoint');" onblur="fadeVal('labelposition_breakpoint');" oninput="updateOutput('labelposition_breakpoint'); checkRadio('label_scheme_perstage'); process_sankey();" onchange="checkRadio('label_scheme_perstage'); process_sankey();" list="tick-stages"><output id="labelposition_breakpoint_val" for="labelposition_breakpoint" class="fade-init output_12" aria-live="polite">-</output></span><span>(Never)</span>
 </div>
 </div>
 </fieldset>
@@ -297,7 +297,7 @@ When a Node has an <strong>empty side</strong>, place its label there.
 
 <div class="hs gap-medium space-around align-center bg-darker pad-medium" onmouseover="revealVal('labels_highlight');" onmouseout="fadeVal('labels_highlight');">
 <label for="labels_highlight" class="highlight_fld_label"><strong>Highlights:</strong></label>
-<div><span class="smalllabel">0</span><span class="output_container"><input id="labels_highlight" class="slider_small" type="range" min="0" max="0.9" step="0.05" value="0.75" onfocus="revealVal('labels_highlight');" onblur="fadeVal('labels_highlight');" oninput="updateOutput('labels_highlight'); process_sankey();" onchange="process_sankey();"><output id="labels_highlight_val" for="labels_highlight" class="fade-init output_3">-</output></span><span class="smalllabel highlight_fld_label">Max</span>
+<div><span class="smalllabel">0</span><span class="output_container"><input id="labels_highlight" class="slider_small" type="range" min="0" max="0.9" step="0.05" value="0.75" onfocus="revealVal('labels_highlight');" onblur="fadeVal('labels_highlight');" oninput="updateOutput('labels_highlight'); process_sankey();" onchange="process_sankey();"><output id="labels_highlight_val" for="labels_highlight" class="fade-init output_3" aria-live="polite">-</output></span><span class="smalllabel highlight_fld_label">Max</span>
 </div>
 </div>
 
@@ -340,12 +340,12 @@ Nodes<span id="node_options_hint">:</span></h2>
 <p class="form_elements1">
 <span class="no_wrap" onmouseover="revealVal('node_h');" onmouseout="fadeVal('node_h');">
 <label for="node_h"><strong>Height:</strong></label>
-.<span class="output_container"><input id="node_h" class="slider_small" type="range" min="0" max="100" step="0.5" value="50" onfocus="revealVal('node_h');" onblur="fadeVal('node_h');" oninput="updateOutput('node_h'); process_sankey();" onchange="process_sankey();"><output id="node_h_val" for="node_h" class="fade-init output_6">-</output></span>|</span>
+.<span class="output_container"><input id="node_h" class="slider_small" type="range" min="0" max="100" step="0.5" value="50" onfocus="revealVal('node_h');" onblur="fadeVal('node_h');" oninput="updateOutput('node_h'); process_sankey();" onchange="process_sankey();"><output id="node_h_val" for="node_h" class="fade-init output_6" aria-live="polite">-</output></span>|</span>
 
 
 <span class="no_wrap" onmouseover="revealVal('node_spacing');" onmouseout="fadeVal('node_spacing');">
 <label for="node_spacing" class="spaced_label"><strong>Spacing:</strong></label>
-<span class="smalllabel">0</span><span class="output_container"><input id="node_spacing" class="slider_small" type="range" min="0" max="100" step="0.5" value="75" onfocus="revealVal('node_spacing');" onblur="fadeVal('node_spacing');" oninput="updateOutput('node_spacing'); process_sankey();" onchange="process_sankey();"><output id="node_spacing_val" for="node_spacing" class="fade-init output_6">-</output></span><span class="smalllabel">Max</span></span>
+<span class="smalllabel">0</span><span class="output_container"><input id="node_spacing" class="slider_small" type="range" min="0" max="100" step="0.5" value="75" onfocus="revealVal('node_spacing');" onblur="fadeVal('node_spacing');" oninput="updateOutput('node_spacing'); process_sankey();" onchange="process_sankey();"><output id="node_spacing_val" for="node_spacing" class="fade-init output_6" aria-live="polite">-</output></span><span class="smalllabel">Max</span></span>
 </p>
 
 <p class="form_elements2">
@@ -357,7 +357,7 @@ Nodes<span id="node_options_hint">:</span></h2>
 
 <span class="no_wrap" onmouseover="revealVal('node_opacity');" onmouseout="fadeVal('node_opacity');">
 <label for="node_opacity" class="spaced_label"><strong>Opacity:</strong></label>
-<span class="smalllabel">0</span><span class="output_container"><input id="node_opacity" class="slider_xxsmall" type="range" min="0" max="1" step="0.05" value="1.0" onfocus="revealVal('node_opacity');" onblur="fadeVal('node_opacity');" oninput="updateOutput('node_opacity'); process_sankey();" onchange="process_sankey();"><output id="node_opacity_val" for="node_opacity" class="fade-init output_3">-</output></span><span class="smalllabel">1</span></span>
+<span class="smalllabel">0</span><span class="output_container"><input id="node_opacity" class="slider_xxsmall" type="range" min="0" max="1" step="0.05" value="1.0" onfocus="revealVal('node_opacity');" onblur="fadeVal('node_opacity');" oninput="updateOutput('node_opacity'); process_sankey();" onchange="process_sankey();"><output id="node_opacity_val" for="node_opacity" class="fade-init output_3" aria-live="polite">-</output></span><span class="smalllabel">1</span></span>
 </p>
 
 <fieldset class="form_elements1">
@@ -438,11 +438,11 @@ Flows<span id="flow_options_hint">:</span></h2>
 <p class="form_elements1">
 <span class="no_wrap" onmouseover="revealVal('flow_opacity');" onmouseout="fadeVal('flow_opacity');">
 <label for="flow_opacity"><strong>Opacity:</strong></label>
-<span class="smalllabel">0</span><span class="output_container"><input id="flow_opacity" class="slider_xsmall" type="range" min="0" max="1" step="0.05" value="0.45" onfocus="revealVal('flow_opacity');" onblur="fadeVal('flow_opacity');" oninput="updateOutput('flow_opacity'); process_sankey();" onchange="process_sankey();"><output id="flow_opacity_val" for="flow_opacity" class="fade-init output_3">-</output></span><span class="smalllabel">1</span></span>
+<span class="smalllabel">0</span><span class="output_container"><input id="flow_opacity" class="slider_xsmall" type="range" min="0" max="1" step="0.05" value="0.45" onfocus="revealVal('flow_opacity');" onblur="fadeVal('flow_opacity');" oninput="updateOutput('flow_opacity'); process_sankey();" onchange="process_sankey();"><output id="flow_opacity_val" for="flow_opacity" class="fade-init output_3" aria-live="polite">-</output></span><span class="smalllabel">1</span></span>
 
 <span class="no_wrap" onmouseover="revealVal('flow_curvature');" onmouseout="fadeVal('flow_curvature');">
 <label for="flow_curvature" class="spaced_label"><strong>Curviness:</strong></label>&nbsp;
-|<span class="output_container"><input id="flow_curvature" class="slider_small" type="range" min="0.1" max="0.9" step="0.04" value="0.5" onfocus="revealVal('flow_curvature');" onblur="fadeVal('flow_curvature');" oninput="updateOutput('flow_curvature'); process_sankey();" onchange="process_sankey();"><output id="flow_curvature_val" for="flow_curvature" class="fade-init output_3">-</output></span>(</span>
+|<span class="output_container"><input id="flow_curvature" class="slider_small" type="range" min="0.1" max="0.9" step="0.04" value="0.5" onfocus="revealVal('flow_curvature');" onblur="fadeVal('flow_curvature');" oninput="updateOutput('flow_curvature'); process_sankey();" onchange="process_sankey();"><output id="flow_curvature_val" for="flow_curvature" class="fade-init output_3" aria-live="polite">-</output></span>(</span>
 </p>
 
 <fieldset class="form_elements2">
@@ -499,7 +499,7 @@ Diagram Scales match as closely as possible.
   <span class="no_wrap" onmouseover="revealVal('internal_iterations');" onmouseout="fadeVal('internal_iterations');">
     <label for="internal_iterations" class="spaced_label"><strong># of Layout Iterations:</strong></label>
     <span class="smalllabel">0</span>
-    <span class="output_container"><input id="internal_iterations" class="slider_small" type="range" min="0" max="30" step="1" value="25" onfocus="revealVal('internal_iterations');" onblur="fadeVal('internal_iterations');" oninput="updateOutput('internal_iterations'); process_sankey();" onchange="process_sankey();"><output id="internal_iterations_val" for="internal_iterations" class="fade-init output_3">-</output></span>
+    <span class="output_container"><input id="internal_iterations" class="slider_small" type="range" min="0" max="30" step="1" value="25" onfocus="revealVal('internal_iterations');" onblur="fadeVal('internal_iterations');" oninput="updateOutput('internal_iterations'); process_sankey();" onchange="process_sankey();"><output id="internal_iterations_val" for="internal_iterations" class="fade-init output_3" aria-live="polite">-</output></span>
     <span class="smalllabel">30</span>
     </span>
 </div>
@@ -607,9 +607,9 @@ Diagram Size &amp; Background<span id="diagram_options_hint">:</span></h2>
 
 <!-- MOVING NODES -->
 <div class="diagram_main">
-<div id="top_messages_container">
-  <div id="info_messages"></div>
-  <div id="issue_messages"></div>
+<div id="top_messages_container" role="status">
+  <div id="info_messages" aria-live="polite"></div>
+  <div id="issue_messages" aria-live="assertive" role="alert"></div>
 </div>
 <p id="reset_moves_area" class="form_elements1">
 Move Nodes by <em>dragging</em>. Double-click a Node to reset, or: <button type="button" id="reset_all_moved_nodes" onclick="resetMovesAndRender(); return false;">Reset all moved Nodes</button>
@@ -654,7 +654,7 @@ Move Nodes by <em>dragging</em>. Double-click a Node to reset, or: <button type=
 <input type="checkbox" id="meta_listimbalances" value="1" onchange="process_sankey();" checked="checked" />
 <label class="ropt" for="meta_listimbalances">List all imbalanced Nodes</label>
 </p>
-<div id="imbalance_messages"></div>
+<div id="imbalance_messages" aria-live="polite" role="status"></div>
 </div>
 </td></tr>
 </table>

@@ -1,10 +1,88 @@
+/**
+ * D3 Sankey Layout Algorithm
+ *
+ * This module implements the Sankey diagram layout algorithm, which positions
+ * nodes and flows to create visually appealing flow diagrams.
+ *
+ * ALGORITHM OVERVIEW:
+ * ===================
+ *
+ * 1. SETUP PHASE (setup()):
+ *    - Cross-links nodes and flows (each node knows its incoming/outgoing flows)
+ *    - Computes 'stage' for each node (horizontal position based on graph depth)
+ *    - Handles special cases like justifying origins/endpoints
+ *
+ * 2. LAYOUT PHASE (layout(iterations)):
+ *    - Calculates node sizes (height based on value)
+ *    - Positions nodes vertically within each stage
+ *    - Uses iterative relaxation to minimize flow crossings
+ *    - Computes flow Y-positions within nodes
+ *
+ * KEY CONCEPTS:
+ * =============
+ *
+ * - STAGE: The horizontal position of a node (0 = leftmost, higher = further right)
+ *   Determined by the maximum depth from any source node
+ *
+ * - NODE HEIGHT (dy): Proportional to the node's total flow value
+ *   Calculated as: nodeHeightFactor * availableHeight * (value / totalValue)
+ *
+ * - NODE SPACING: Vertical gap between nodes in the same stage
+ *   Calculated based on nodeSpacingFactor and available space
+ *
+ * - FLOW THICKNESS (f.dy): Proportional to the flow's value
+ *
+ * - FLOW POSITIONS (sy, ty): Y-offset within source/target nodes
+ *   where the flow connects
+ *
+ * RELAXATION ALGORITHM:
+ * =====================
+ * The layout uses iterative relaxation to position nodes:
+ *
+ * 1. Forward pass: Move nodes toward the center of mass of their source nodes
+ * 2. Backward pass: Move nodes toward the center of mass of their target nodes
+ * 3. Resolve collisions: Push overlapping nodes apart
+ * 4. Repeat for N iterations (default 25)
+ *
+ * This produces layouts where connected nodes are close together and
+ * flows have minimal crossings.
+ *
+ * DATA STRUCTURES:
+ * ================
+ *
+ * Node object after layout:
+ * {
+ *   index: number,       // Position in nodes array
+ *   stage: number,       // Horizontal position (column)
+ *   x: number,           // Pixel X position
+ *   y: number,           // Pixel Y position
+ *   dx: number,          // Width (same as nodeWidth)
+ *   dy: number,          // Height (proportional to value)
+ *   value: number,       // Total flow through this node
+ *   flows: {IN: [], OUT: []},  // Connected flows
+ *   total: {IN: n, OUT: n},    // Sum of flow values in/out
+ * }
+ *
+ * Flow object after layout:
+ * {
+ *   index: number,       // Position in flows array
+ *   source: Node,        // Source node reference
+ *   target: Node,        // Target node reference
+ *   value: number,       // Flow amount
+ *   dy: number,          // Thickness in pixels
+ *   sy: number,          // Y-offset in source node
+ *   ty: number,          // Y-offset in target node
+ * }
+ *
+ * @returns {object} Sankey layout object with chainable methods
+ */
 d3.sankey = () => {
   'use strict';
 
   const sankey = {},
     // Set up some handy constants (acting as enums)
     // These numbers are relatively prime so each cross-product is unique
-    // (when we need that)
+    // (when we need that, e.g., for collision detection direction flags)
     [SOURCES, TARGETS, TOP, BOTTOM, NEAREST] = [2, 3, 5, 7, 11];
 
   // Set by inputs:
