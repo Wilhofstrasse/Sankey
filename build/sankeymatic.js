@@ -738,12 +738,26 @@ glob.replaceGraph = (graphName) => {
 
 // MARK Color Theme handling
 
+// H&C Corporate Colors
+const hcColors = [
+  '#14324E', // H&C Blue (primary)
+  '#E94D3A', // H&C Warm Red (primary)
+  '#1D4360', // Blue 90
+  '#345671', // Blue 80
+  '#4C6982', // Blue 70
+  '#647C93', // Blue 60
+  '#EF624F', // Red 90
+  '#F37663', // Red 80
+  '#5B5D64', // Grey 100
+  '#797B81', // Grey 80
+];
+
 // colorThemes: The available color arrays to assign to Nodes.
 const colorThemes = new Map([
   ['a', {
-    colorset: d3.schemeCategory10,
-    nickname: 'Categories',
-    d3Name: 'Category10',
+    colorset: hcColors,
+    nickname: 'H&C',
+    d3Name: 'H&C Corporate',
   }],
   ['b', {
     colorset: d3.schemeTableau10,
