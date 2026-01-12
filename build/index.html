@@ -347,6 +347,9 @@ Nodes<span id="node_options_hint">:</span></h2>
 <span class="no_wrap"><label for="node_border" class="spaced_label"><strong>Border:</strong></label>
 <input id="node_border" type="number" class="number_10s" min="0" value="0" step="1" onchange="process_sankey();"></span>
 
+<span class="no_wrap"><label for="node_radius" class="spaced_label"><strong>Radius:</strong></label>
+<input id="node_radius" type="number" class="number_10s" min="0" value="0" step="1" onchange="process_sankey();" title="Corner radius for rounded nodes"></span>
+
 <span class="no_wrap" onmouseover="revealVal('node_opacity');" onmouseout="fadeVal('node_opacity');">
 <label for="node_opacity" class="spaced_label"><strong>Opacity:</strong></label>
 <span class="smalllabel">0</span><span class="output_container"><input id="node_opacity" class="slider_xxsmall" type="range" min="0" max="1" step="0.05" value="1.0" onfocus="revealVal('node_opacity');" onblur="fadeVal('node_opacity');" oninput="updateOutput('node_opacity'); process_sankey();" onchange="process_sankey();"><output id="node_opacity_val" for="node_opacity" class="fade-init output_3">-</output></span><span class="smalllabel">1</span></span>
