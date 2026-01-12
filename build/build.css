@@ -61,7 +61,7 @@
   --bg-light: var(--hc-blue-10);
   --bg-pale: var(--hc-grey-10);
   --bg-palest: var(--hc-white);
-  --bg-pale-warning: #fffff8;
+  --bg-pale-warning: var(--hc-red-10);
   --bg-attention: var(--hc-red-10);
   --bg-plain-primary: var(--hc-grey-20);
   --bg-plain-secondary: var(--hc-grey-10);
