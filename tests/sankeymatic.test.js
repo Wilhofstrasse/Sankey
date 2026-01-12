@@ -37,8 +37,8 @@ function escapeHTML(unsafeString) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;')
-    .replaceAll("'", '&lsquo;')
-    .replaceAll("'", '&rsquo;')
+    .replaceAll(''', '&lsquo;')
+    .replaceAll(''', '&rsquo;')
     .replaceAll('\n', '<br>');
 }
 

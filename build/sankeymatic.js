@@ -2539,62 +2539,6 @@ ${escapeHTML(lineIn)}`
     precisionCheckbox.disabled = (maxDecimalPlaces === 0);
   }
 
-  // Check for cycles in the graph and warn if any are found
-  function detectCycles(flows) {
-    const nodeOutgoing = new Map();
-    flows.forEach((f) => {
-      if (!nodeOutgoing.has(f.source)) {
-        nodeOutgoing.set(f.source, new Set());
-      }
-      nodeOutgoing.get(f.source).add(f.target);
-    });
-
-    const visited = new Set();
-    const recursionStack = new Set();
-    const cycleNodes = [];
-
-    function hasCycle(node, path) {
-      if (recursionStack.has(node)) {
-        cycleNodes.push(...path, node);
-        return true;
-      }
-      if (visited.has(node)) return false;
-
-      visited.add(node);
-      recursionStack.add(node);
-
-      const neighbors = nodeOutgoing.get(node) || new Set();
-      for (const neighbor of neighbors) {
-        if (hasCycle(neighbor, [...path, node])) {
-          return true;
-        }
-      }
-
-      recursionStack.delete(node);
-      return false;
-    }
-
-    for (const node of nodeOutgoing.keys()) {
-      if (hasCycle(node, [])) {
-        return cycleNodes;
-      }
-    }
-    return null;
-  }
-
-  const cycleResult = detectCycles(goodFlows);
-  if (cycleResult && cycleResult.length > 0) {
-    const cycleNodeNames = cycleResult
-      .map((n) => typeof n === 'string' ? n : n)
-      .join(' → ');
-    msg.add(
-      `Warning: Cycle detected in the graph. `
-      + `Sankey diagrams work best with directed acyclic graphs. `
-      + `Cycle path: ${escapeHTML(cycleNodeNames)}`,
-      'issue'
-    );
-  }
-
   // Mention any un-parseable lines:
   invalidLines.forEach((parsingError) => {
     msg.add(
@@ -2654,6 +2598,63 @@ ${escapeHTML(lineIn)}`
 
     approvedFlows.push(thisFlow);
   });
+
+  // Check for cycles in the graph and warn if any are found
+  // (Done after target normalization so node names are correct)
+  function detectCycles(flowList) {
+    const nodeOutgoing = new Map();
+    flowList.forEach((f) => {
+      const sourceName = f.source.name || f.source;
+      const targetName = f.target.name || f.target;
+      if (!nodeOutgoing.has(sourceName)) {
+        nodeOutgoing.set(sourceName, new Set());
+      }
+      nodeOutgoing.get(sourceName).add(targetName);
+    });
+
+    const visited = new Set();
+    const recursionStack = new Set();
+    const cycleNodes = [];
+
+    function hasCycle(node, path) {
+      if (recursionStack.has(node)) {
+        cycleNodes.push(...path, node);
+        return true;
+      }
+      if (visited.has(node)) return false;
+
+      visited.add(node);
+      recursionStack.add(node);
+
+      const neighbors = nodeOutgoing.get(node) || new Set();
+      for (const neighbor of neighbors) {
+        if (hasCycle(neighbor, [...path, node])) {
+          return true;
+        }
+      }
+
+      recursionStack.delete(node);
+      return false;
+    }
+
+    for (const node of nodeOutgoing.keys()) {
+      if (hasCycle(node, [])) {
+        return cycleNodes;
+      }
+    }
+    return null;
+  }
+
+  const cycleResult = detectCycles(approvedFlows);
+  if (cycleResult && cycleResult.length > 0) {
+    const cycleNodeNames = cycleResult.join(' → ');
+    msg.add(
+      `Warning: Cycle detected in the graph. `
+      + `Sankey diagrams work best with directed acyclic graphs. `
+      + `Cycle path: ${escapeHTML(cycleNodeNames)}`,
+      'issue'
+    );
+  }
 
   // MARK: Calculate any dependent amounts
 

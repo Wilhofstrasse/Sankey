@@ -1,6 +1,31 @@
 // constants.js: Reference file with several values used in sankeymatic.js
 /* eslint-disable no-unused-vars */
 
+// H&C (Horn & Company) Corporate Color Palette
+const HC_COLORS = {
+  darkBlue: '#14324E',      // Primary brand color
+  coralRed: '#E94D3A',      // Secondary brand color / accent
+  white: '#FFFFFF',
+  lightGray: '#F0F0F0',
+  black: '#000000',
+  accent3: '#C2C2C2',
+  accent4: '#A4A3A7',
+  accent5: '#87878B',
+  accent6: '#5B5D64',
+};
+
+// H&C Flow colors - corporate palette with variations
+const HC_FLOW_COLORS = [
+  '#14324E', // Dark Blue
+  '#E94D3A', // Coral Red
+  '#5B5D64', // Accent 6
+  '#87878B', // Accent 5
+  '#A4A3A7', // Accent 4
+  '#C2C2C2', // Accent 3
+  '#1a4d73', // Lighter blue
+  '#f07563', // Lighter coral
+];
+
 const MAXBREAKPOINT = 9999,
 // skmSettings = Settings required to render a diagram.
 // Format = field_name: [data type, initial value, allowed values]
