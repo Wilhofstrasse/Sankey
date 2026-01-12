@@ -1471,6 +1471,12 @@ function render_sankey(allNodes, allFlows, cfg, numberStyle) {
   // Add a tooltip for each flow:
   diagFlows.append('title').text((f) => f.tooltip);
 
+  // Add click handler for color picker on flows:
+  diagFlows.on('click', (event, f) => {
+    event.stopPropagation();
+    glob.openColorPicker('flow', `${f.source.name} → ${f.target.name}`, f.color);
+  });
+
   // MARK Drag functions for Nodes
 
   // isAZeroMove: simple test of whether every offset is 0 (no move at all):
@@ -1725,6 +1731,13 @@ M${ep(n.lastPos.x)} 0 v${ep(graph.h)} m${ep(n.dx)} 0 V0`)
     // Add tooltips showing node totals:
     .append('title')
     .text((n) => n.tooltip);
+
+  // Add click handler for color picker on node rects:
+  diagNodes.selectAll('rect:not([id$="_border"])')
+    .on('click', (event, n) => {
+      event.stopPropagation();
+      glob.openColorPicker('node', n.name, n.color);
+    });
 
   // Create a top layer for labels & highlights, so nodes can't block them:
   const diagLabels = diagMain.append('g')
@@ -2968,6 +2981,162 @@ Total Outputs: <strong>${withUnits(grandTotal[OUT])}</strong>`;
 
 // Debounced version of process_sankey as event handler for keystrokes:
 glob.debounced_process_sankey = debounce(glob.process_sankey);
+
+// MARK Color Picker functions
+// State for color picker
+let colorPickerState = {
+  type: null,    // 'node' or 'flow'
+  name: null,    // Name of the node or flow description
+  currentColor: null
+};
+
+// Open the color picker dialog
+glob.openColorPicker = (type, name, currentColor) => {
+  colorPickerState = { type, name, currentColor };
+
+  const dialog = el('colorPickerDialog');
+  const title = el('colorPickerTitle');
+  const customInput = el('customColorInput');
+
+  // Set title based on what's being colored
+  title.textContent = type === 'node'
+    ? `Color for: ${name}`
+    : `Color for: ${name}`;
+
+  // Set current color in custom input
+  if (currentColor && currentColor.startsWith('#')) {
+    customInput.value = currentColor.length === 4
+      ? `#${currentColor[1]}${currentColor[1]}${currentColor[2]}${currentColor[2]}${currentColor[3]}${currentColor[3]}`
+      : currentColor;
+  }
+
+  // Highlight current color if it matches a swatch
+  document.querySelectorAll('.color-swatch').forEach(swatch => {
+    swatch.classList.remove('selected');
+    if (swatch.dataset.color.toLowerCase() === currentColor?.toLowerCase()) {
+      swatch.classList.add('selected');
+    }
+  });
+
+  dialog.showModal();
+};
+
+// Close the color picker dialog
+glob.closeColorPicker = () => {
+  const dialog = el('colorPickerDialog');
+  dialog.close();
+  colorPickerState = { type: null, name: null, currentColor: null };
+};
+
+// Apply a color from swatch click
+glob.applyColorFromSwatch = (color) => {
+  applyColorChange(color);
+  glob.closeColorPicker();
+};
+
+// Apply custom color
+glob.applyCustomColor = () => {
+  const color = elV('customColorInput');
+  applyColorChange(color);
+  glob.closeColorPicker();
+};
+
+// Apply the color change to the input text and re-render
+function applyColorChange(newColor) {
+  if (!colorPickerState.type || !colorPickerState.name) return;
+
+  const inputEl = el(userInputsField);
+  let inputText = inputEl.value;
+  const lines = inputText.split('\n');
+  const upperColor = newColor.toUpperCase();
+
+  if (colorPickerState.type === 'node') {
+    // For nodes, we need to add or update a color attribute line
+    // Format: :NodeName #color
+    const nodeName = colorPickerState.name;
+    const colorLineRegex = new RegExp(`^:\\s*${escapeRegex(nodeName)}\\s+#[0-9A-Fa-f]{3,6}`, 'm');
+    const existingColorLine = inputText.match(colorLineRegex);
+
+    if (existingColorLine) {
+      // Update existing color line
+      inputText = inputText.replace(colorLineRegex, `:${nodeName} ${upperColor}`);
+    } else {
+      // Add new color line after flow definitions
+      // Find a good place to insert (after last flow line or at end)
+      const lastFlowIndex = findLastFlowLineIndex(lines);
+      lines.splice(lastFlowIndex + 1, 0, `:${nodeName} ${upperColor}`);
+      inputText = lines.join('\n');
+    }
+  } else if (colorPickerState.type === 'flow') {
+    // For flows, we need to find the flow line and add/update the color
+    // Flow format: Source [amount] Target #color
+    const [sourceName, targetName] = colorPickerState.name.split(' → ');
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      // Skip comments and empty lines
+      if (line.trim().startsWith('//') || line.trim() === '') continue;
+
+      // Check if this line matches our flow (Source [amount] Target)
+      // Handle display names with "Name">"DisplayName" syntax
+      const sourcePattern = escapeRegex(sourceName.split('>')[0].trim());
+      const targetPattern = escapeRegex(targetName.split('>')[0].trim());
+
+      // Match: Source [amount] Target (with optional existing color)
+      const flowRegex = new RegExp(
+        `^(${sourcePattern}(?:\\s*>\\s*[^\\[]+)?\\s*\\[[^\\]]+\\]\\s*${targetPattern}(?:\\s*>\\s*[^#\\n]+)?)(?:\\s*#[0-9A-Fa-f]{3,6}(?:\\.\\d+)?)?\\s*$`,
+        'i'
+      );
+
+      if (flowRegex.test(line)) {
+        // Replace or add color
+        lines[i] = line.replace(/#[0-9A-Fa-f]{3,6}(?:\.\d+)?/gi, '').trimEnd() + ` ${upperColor}`;
+        break;
+      }
+    }
+    inputText = lines.join('\n');
+  }
+
+  inputEl.value = inputText;
+  glob.process_sankey();
+}
+
+// Helper: escape special regex characters in a string
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Helper: find the index of the last flow line
+function findLastFlowLineIndex(lines) {
+  let lastFlowIndex = -1;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    // Flow lines contain [...] and aren't comments or attribute lines
+    if (line.includes('[') && line.includes(']') && !line.startsWith('//') && !line.startsWith(':')) {
+      lastFlowIndex = i;
+    }
+  }
+  return lastFlowIndex === -1 ? lines.length - 1 : lastFlowIndex;
+}
+
+// Set up color swatch click handlers
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.color-swatch').forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      glob.applyColorFromSwatch(swatch.dataset.color);
+    });
+  });
+
+  // Close dialog when clicking backdrop
+  const dialog = el('colorPickerDialog');
+  if (dialog) {
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        glob.closeColorPicker();
+      }
+    });
+  }
+});
 
 // Load a diagram definition from the URL if there was one:
 loadFromQueryString();

@@ -1140,6 +1140,119 @@ fieldset.simple {
 .diagram_main     { grid-area: main; }
 .diagram_about    { grid-area: about; }
 
+/* Color Picker Dialog */
+#colorPickerDialog {
+  box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.3);
+  border-radius: 0.75em;
+  border: 2px solid var(--hc-blue-100);
+  padding: 0;
+  min-width: 280px;
+}
+
+#colorPickerDialog::backdrop {
+  opacity: 0.4;
+  background-color: #000;
+}
+
+#colorPickerDialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--hc-blue-100);
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 0.5em 0.5em 0 0;
+}
+
+#colorPickerDialog header h3 {
+  margin: 0;
+  font-size: 1em;
+}
+
+#colorPickerDialog .dialog-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  padding: 0.2em;
+}
+
+#colorPickerDialog .dialog-close:hover {
+  color: var(--hc-red-100);
+}
+
+#colorPickerDialog section {
+  padding: 1em;
+}
+
+.color-picker-section {
+  margin-bottom: 1em;
+}
+
+.color-picker-section:last-child {
+  margin-bottom: 0;
+}
+
+.color-picker-label {
+  font-weight: bold;
+  font-size: 0.85em;
+  color: var(--hc-grey-100);
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid var(--hc-grey-20);
+  padding-bottom: 0.25em;
+}
+
+.color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--hc-grey-40);
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.color-swatch:focus {
+  outline: 2px solid var(--hc-blue-100);
+  outline-offset: 1px;
+}
+
+.color-swatch.selected {
+  outline: 3px solid var(--hc-warm-red);
+  outline-offset: 1px;
+}
+
+#customColorInput {
+  width: 60px;
+  height: 30px;
+  border: 1px solid var(--hc-grey-40);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Make nodes and flows clickable for color picker */
+.node rect {
+  cursor: pointer;
+}
+
+.sankey_flow {
+  cursor: pointer;
+}
+
 /* media query land */
 
 @media screen and (width <= 1024px) {
