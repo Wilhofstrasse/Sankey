@@ -1,49 +1,106 @@
 :root {
-  --nav-level-1-bg: #013355;
-  --deep-blue: #036;
-  --dark-blue: #047;
-  --secondary-background: #057;
-  --medium-blue: #069;
-  --button-blue: #10afff;
-  --light-blue: #27a;
-  --lighter-blue: #5ec9ff;
-  --gray-blue: #9ac;
-  --pale-blue-0: #c0eaff;
-  --pale-blue-1: #e7f7ff;
+  /* H&C Corporate Colors - Primary */
+  --hc-blue: #14324E;
+  --hc-warm-red: #E94D3A;
+  --hc-white: #FFFFFF;
+  --hc-black: #000000;
+  --hc-light-bg: #F0F0F0;
 
-  --bg-medium: #bdf;
-  --bg-light: #def;
-  --bg-pale: #eef7ff;
-  --bg-palest: #fbfeff;
-  --bg-pale-warning: #fffff8;
-  --bg-attention: #e3ff9f;
-  --bg-plain-primary: #e6e6e6;
+  /* H&C Blue Scale */
+  --hc-blue-100: #14324E;
+  --hc-blue-90: #1D4360;
+  --hc-blue-80: #345671;
+  --hc-blue-70: #4C6982;
+  --hc-blue-60: #647C93;
+  --hc-blue-50: #7C93A5;
+  --hc-blue-40: #95A8B6;
+  --hc-blue-30: #B0BDC8;
+  --hc-blue-20: #CAD3DB;
+  --hc-blue-10: #E4E9EE;
+
+  /* H&C Warm Red Scale */
+  --hc-red-100: #E94D3A;
+  --hc-red-90: #EF624F;
+  --hc-red-80: #F37663;
+  --hc-red-70: #F78877;
+  --hc-red-60: #FB9B8A;
+  --hc-red-50: #FDAC9E;
+  --hc-red-40: #FEBCB0;
+  --hc-red-30: #FFCEC5;
+  --hc-red-20: #FFDED7;
+  --hc-red-10: #FFEFEC;
+
+  /* H&C Grey Scale */
+  --hc-grey-100: #5B5D64;
+  --hc-grey-90: #696C72;
+  --hc-grey-80: #797B81;
+  --hc-grey-70: #898A90;
+  --hc-grey-60: #999A9F;
+  --hc-grey-50: #A9AAAE;
+  --hc-grey-40: #BABBBE;
+  --hc-grey-30: #CBCBCE;
+  --hc-grey-20: #DCDCDE;
+  --hc-grey-10: #EDEEEE;
+
+  /* Legacy aliases */
+  --hc-dark-blue: var(--hc-blue-100);
+  --hc-coral-red: var(--hc-red-100);
+  --hc-light-gray: var(--hc-light-bg);
+  --hc-accent3: var(--hc-grey-40);
+  --hc-accent4: var(--hc-grey-50);
+  --hc-accent5: var(--hc-grey-70);
+  --hc-accent6: var(--hc-grey-100);
+
+  /* Map legacy colors to H&C palette */
+  --nav-level-1-bg: var(--hc-dark-blue);
+  --deep-blue: var(--hc-dark-blue);
+  --dark-blue: var(--hc-dark-blue);
+  --secondary-background: var(--hc-dark-blue);
+  --medium-blue: #1a4d73;
+  --button-blue: var(--hc-coral-red);
+  --light-blue: #3a6a8a;
+  --lighter-blue: #5a8aaa;
+  --gray-blue: var(--hc-accent4);
+  --pale-blue-0: #d4e4f0;
+  --pale-blue-1: #e9f1f7;
+
+  --bg-medium: #d4e4f0;
+  --bg-light: #e9f1f7;
+  --bg-pale: #f5f8fa;
+  --bg-palest: #fafbfc;
+  --bg-pale-warning: #fffaf0;
+  --bg-attention: var(--hc-coral-red);
+  --bg-plain-primary: var(--hc-light-gray);
   --bg-plain-secondary: #f8f8f8;
 
-  --selected-option: #00557f;
-  --warning: darkred;
+  --selected-option: var(--hc-dark-blue);
+  --warning: var(--hc-coral-red);
 
-  --gray60: #999;
-  --lighter-gray: #f1f5f9;
-  --text-plain: #333;
+  --gray60: var(--hc-accent5);
+  --lighter-gray: var(--hc-light-gray);
+  --text-plain: var(--hc-dark-blue);
 
-  --border-base: 1px solid var(--medium-blue);
-  --border-dark: 1px solid var(--deep-blue);
-  --border-light: 1px solid var(--gray-blue);
-  --border-gray: 1px solid var(--gray60);
-  --border-dotted: 1px dotted var(--medium-blue);
+  --border-base: 1px solid var(--hc-accent4);
+  --border-dark: 1px solid var(--hc-dark-blue);
+  --border-light: 1px solid var(--hc-accent3);
+  --border-gray: 1px solid var(--hc-accent5);
+  --border-dotted: 1px dotted var(--hc-accent4);
 
   --screen-sm: 675px;
   --screen-md: 1024px;
   --screen-lg: 1280px;
 
   --grid-gap: 0.5em;
+
+  /* H&C Typography */
+  --hc-font-family: 'Calibri Light', 'Calibri', 'Segoe UI', sans-serif;
 }
 
 body {
   font-size: small;
-  font-family: sans-serif;
-  background-color: #FBFDFD;
+  font-family: var(--hc-font-family);
+  background-color: var(--hc-light-gray);
+  color: var(--hc-dark-blue);
   margin: 0;
 }
 
@@ -162,6 +219,7 @@ be shown, not the size of the slider. */
 .slider_medium + .output_9 { left: 1.9em; }
 .slider_medium + .output_12 { left: 1.3em; }
 
+.font_calibri { font-family: 'Calibri Light', 'Calibri', sans-serif; }
 .font_sans { font-family: sans-serif; }
 .font_serif { font-family: serif; }
 .font_mono { font-family: monospace; }
@@ -711,12 +769,44 @@ input[type="file"]:focus + label {
 }
 
 button#save_as_svg {
-  background-color: #304550;
-  border-color: #1d3030;
+  background-color: var(--hc-accent6);
+  border-color: var(--hc-dark-blue);
 }
 
 button#save_as_svg:hover {
-  background-color: #495961;
+  background-color: var(--hc-accent5);
+}
+
+/* H&C Primary Button Style */
+.btn-hc-primary {
+  background-color: var(--hc-coral-red);
+  color: var(--hc-white);
+  border: none;
+  border-radius: 3px;
+  padding: 10px 18px;
+  font-family: var(--hc-font-family);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-hc-primary:hover {
+  background-color: #d44434;
+}
+
+/* H&C Secondary Button Style */
+.btn-hc-secondary {
+  background-color: var(--hc-dark-blue);
+  color: var(--hc-white);
+  border: none;
+  border-radius: 3px;
+  padding: 10px 18px;
+  font-family: var(--hc-font-family);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-hc-secondary:hover {
+  background-color: #1a4d73;
 }
 
 #example_diagrams {
@@ -962,7 +1052,7 @@ input:checked ~ label.ropt,
 }
 
 .header__links a:hover{
-  text-decoration-color: var(--lighter-blue);
+  text-decoration-color: var(--hc-coral-red);
 }
 
 
