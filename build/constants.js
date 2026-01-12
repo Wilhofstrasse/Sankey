@@ -3,27 +3,62 @@
 
 // H&C (Horn & Company) Corporate Color Palette
 const HC_COLORS = {
-  darkBlue: '#14324E',      // Primary brand color
-  coralRed: '#E94D3A',      // Secondary brand color / accent
+  // Primary
+  blue: '#14324E',
+  warmRed: '#E94D3A',
   white: '#FFFFFF',
-  lightGray: '#F0F0F0',
   black: '#000000',
-  accent3: '#C2C2C2',
-  accent4: '#A4A3A7',
-  accent5: '#87878B',
-  accent6: '#5B5D64',
+  lightBg: '#F0F0F0',
+
+  // Blue Scale
+  blue100: '#14324E',
+  blue90: '#1D4360',
+  blue80: '#345671',
+  blue70: '#4C6982',
+  blue60: '#647C93',
+  blue50: '#7C93A5',
+  blue40: '#95A8B6',
+  blue30: '#B0BDC8',
+  blue20: '#CAD3DB',
+  blue10: '#E4E9EE',
+
+  // Warm Red Scale
+  red100: '#E94D3A',
+  red90: '#EF624F',
+  red80: '#F37663',
+  red70: '#F78877',
+  red60: '#FB9B8A',
+  red50: '#FDAC9E',
+  red40: '#FEBCB0',
+  red30: '#FFCEC5',
+  red20: '#FFDED7',
+  red10: '#FFEFEC',
+
+  // Grey Scale
+  grey100: '#5B5D64',
+  grey90: '#696C72',
+  grey80: '#797B81',
+  grey70: '#898A90',
+  grey60: '#999A9F',
+  grey50: '#A9AAAE',
+  grey40: '#BABBBE',
+  grey30: '#CBCBCE',
+  grey20: '#DCDCDE',
+  grey10: '#EDEEEE',
 };
 
-// H&C Flow colors - corporate palette with variations
+// H&C Flow colors - corporate palette for Sankey flows
 const HC_FLOW_COLORS = [
-  '#14324E', // Dark Blue
-  '#E94D3A', // Coral Red
-  '#5B5D64', // Accent 6
-  '#87878B', // Accent 5
-  '#A4A3A7', // Accent 4
-  '#C2C2C2', // Accent 3
-  '#1a4d73', // Lighter blue
-  '#f07563', // Lighter coral
+  '#14324E', // Blue 100 (primary)
+  '#E94D3A', // Warm Red 100
+  '#1D4360', // Blue 90
+  '#5B5D64', // Grey 100
+  '#345671', // Blue 80
+  '#EF624F', // Warm Red 90
+  '#4C6982', // Blue 70
+  '#696C72', // Grey 90
+  '#647C93', // Blue 60
+  '#F37663', // Warm Red 80
 ];
 
 const MAXBREAKPOINT = 9999,
@@ -72,7 +107,7 @@ const MAXBREAKPOINT = 9999,
     ['labels_color', ['color', '#000000', []]],
     ['labels_hide', ['yn', 'n', []]],
     ['labels_highlight', ['decimal', 0.75, []]],
-    ['labels_fontface', ['radio', 'sans-serif', ['monospace', 'sans-serif', 'serif']]],
+    ['labels_fontface', ['radio', 'calibri', ['calibri', 'monospace', 'sans-serif', 'serif']]],
     ['labels_linespacing', ['decimal', 0.15, []]],
     ['labels_relativesize', ['whole', 100, [50, 150]]],
     ['labels_magnify', ['whole', 100, [50, 150]]],

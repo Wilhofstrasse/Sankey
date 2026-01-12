@@ -22,6 +22,21 @@ function el(domId) { return document.getElementById(domId); }
 function elV(domId) { return document.getElementById(domId).value; }
 
 /**
+ * Map font face values to actual CSS font-family strings
+ * @param {string} fontface - font face value from settings
+ * @returns {string} CSS font-family value
+ */
+function fontFamily(fontface) {
+  const fontMap = {
+    calibri: "'Calibri Light', 'Calibri', sans-serif",
+    'sans-serif': 'sans-serif',
+    serif: 'serif',
+    monospace: 'monospace',
+  };
+  return fontMap[fontface] || fontface;
+}
+
+/**
  * Change "\n" to a space instead of a newline. (Used in logging, tooltips)
  * @param {string} s
  * @returns string
@@ -838,7 +853,7 @@ function render_sankey(allNodes, allFlows, cfg, numberStyle) {
     .attr('width', cfg.size_w)
     .attr('text-anchor', 'middle')
     .attr('opacity', '0') // Keep all this invisible...
-    .attr('font-family', cfg.labels_fontface)
+    .attr('font-family', fontFamily(cfg.labels_fontface))
     .attr('font-size', `${ep(cfg.labelname_size)}px`);
   scratchRoot.selectAll('*').remove(); // Clear out any past items
 
@@ -1744,7 +1759,7 @@ M${ep(n.lastPos.x)} 0 v${ep(graph.h)} m${ep(n.dx)} 0 V0`)
   const diagLabels = diagMain.append('g')
     .attr('id', 'sankey_labels')
     // These font spec defaults apply to all labels within
-    .attr('font-family', cfg.labels_fontface)
+    .attr('font-family', fontFamily(cfg.labels_fontface))
     .attr('font-size', `${ep(cfg.labelname_size)}px`)
     .attr('fill', cfg.labels_color);
   if (cfg.meta_mentionsankeymatic) {

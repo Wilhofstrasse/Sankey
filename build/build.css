@@ -1,14 +1,55 @@
 :root {
-  /* H&C Corporate Colors */
-  --hc-dark-blue: #14324E;
-  --hc-coral-red: #E94D3A;
+  /* H&C Corporate Colors - Primary */
+  --hc-blue: #14324E;
+  --hc-warm-red: #E94D3A;
   --hc-white: #FFFFFF;
-  --hc-light-gray: #F0F0F0;
   --hc-black: #000000;
-  --hc-accent3: #C2C2C2;
-  --hc-accent4: #A4A3A7;
-  --hc-accent5: #87878B;
-  --hc-accent6: #5B5D64;
+  --hc-light-bg: #F0F0F0;
+
+  /* H&C Blue Scale */
+  --hc-blue-100: #14324E;
+  --hc-blue-90: #1D4360;
+  --hc-blue-80: #345671;
+  --hc-blue-70: #4C6982;
+  --hc-blue-60: #647C93;
+  --hc-blue-50: #7C93A5;
+  --hc-blue-40: #95A8B6;
+  --hc-blue-30: #B0BDC8;
+  --hc-blue-20: #CAD3DB;
+  --hc-blue-10: #E4E9EE;
+
+  /* H&C Warm Red Scale */
+  --hc-red-100: #E94D3A;
+  --hc-red-90: #EF624F;
+  --hc-red-80: #F37663;
+  --hc-red-70: #F78877;
+  --hc-red-60: #FB9B8A;
+  --hc-red-50: #FDAC9E;
+  --hc-red-40: #FEBCB0;
+  --hc-red-30: #FFCEC5;
+  --hc-red-20: #FFDED7;
+  --hc-red-10: #FFEFEC;
+
+  /* H&C Grey Scale */
+  --hc-grey-100: #5B5D64;
+  --hc-grey-90: #696C72;
+  --hc-grey-80: #797B81;
+  --hc-grey-70: #898A90;
+  --hc-grey-60: #999A9F;
+  --hc-grey-50: #A9AAAE;
+  --hc-grey-40: #BABBBE;
+  --hc-grey-30: #CBCBCE;
+  --hc-grey-20: #DCDCDE;
+  --hc-grey-10: #EDEEEE;
+
+  /* Legacy aliases */
+  --hc-dark-blue: var(--hc-blue-100);
+  --hc-coral-red: var(--hc-red-100);
+  --hc-light-gray: var(--hc-light-bg);
+  --hc-accent3: var(--hc-grey-40);
+  --hc-accent4: var(--hc-grey-50);
+  --hc-accent5: var(--hc-grey-70);
+  --hc-accent6: var(--hc-grey-100);
 
   /* Map legacy colors to H&C palette */
   --nav-level-1-bg: var(--hc-dark-blue);
@@ -178,6 +219,7 @@ be shown, not the size of the slider. */
 .slider_medium + .output_9 { left: 1.9em; }
 .slider_medium + .output_12 { left: 1.3em; }
 
+.font_calibri { font-family: 'Calibri Light', 'Calibri', sans-serif; }
 .font_sans { font-family: sans-serif; }
 .font_serif { font-family: serif; }
 .font_mono { font-family: monospace; }

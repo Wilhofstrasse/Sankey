@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1">
-<title>SankeyMATIC: Build a Sankey Diagram</title>
+<title>H&C Sankey Builder</title>
 <link rel="stylesheet" href="build.css">
 <script defer src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/canvg@3/lib/umd.js" crossorigin="anonymous"></script>
@@ -30,17 +30,9 @@
 <body>
 <header class="header vs f-middle">
   <nav class="header__nav hs-sm-vs space-between">
-  <a href="/" title="SankeyMATIC home page" class="header__logo hs f-middle align-center"><img alt="SankeyMATIC logo" src="i/SKM-trsp-300.png" height="27" width="27" class="skm_logo_small" />&nbsp;SankeyMATIC</a>
-  <ul class="header__links hs f-middle">
-    <li><a href="/news/" title="What's New with SankeyMATIC">News</a></li>
-    <li><a href="/data/" title="Interesting Diagrams from the Real World">Data</a></li>
-    <li><a href="/gallery/" title="Gallery of SankeyMATIC Examples">Gallery</a></li>
-    <li><a href="/manual/" title="How to use SankeyMATIC to the fullest">Manual</a></li>
-    <li><a href="/about/" title="About SankeyMATIC and how to support the site">About</a></li>
-  </ul>
+  <span class="header__logo hs f-middle align-center"><img alt="H&C logo" src="i/SKM-trsp-300.png" height="27" width="27" class="skm_logo_small" />&nbsp;H&amp;C Sankey Builder</span>
   </nav>
 </header>
-<div class="callout-container pad-small">If you find SankeyMATIC useful, please consider <a href="../about/" class="internal-link" title="(new window) About SankeyMATIC and how to support the site" target="_blank">donating to support further development</a>. Thanks!</div>
 
 <main>
 <div id="example_diagrams" class="text_center">
@@ -180,7 +172,8 @@ Labels<span id="label_options_hint">...</span></h2>
 <div class="hs gap-medium indented align-baseline b-pad">
 <span>
 <strong>Font:</strong>
-<span class="no_wrap"><input name="labels_fontface" type="radio" id="sans_serif" value="sans-serif" checked="checked" onchange="process_sankey();" /><label for="sans_serif" class="ropt font_sans">sans</label></span>
+<span class="no_wrap"><input name="labels_fontface" type="radio" id="calibri" value="calibri" checked="checked" onchange="process_sankey();" /><label for="calibri" class="ropt font_calibri">Calibri</label></span>
+<span class="no_wrap"><input name="labels_fontface" type="radio" id="sans_serif" value="sans-serif" onchange="process_sankey();" /><label for="sans_serif" class="ropt font_sans">sans</label></span>
 <span class="no_wrap"><input name="labels_fontface" type="radio" id="serif" value="serif" onchange="process_sankey();" /><label for="serif" class="ropt font_serif">serif</label></span>
 <span class="no_wrap"><input name="labels_fontface" type="radio" id="monospace" value="monospace" onchange="process_sankey();" /><label for="monospace" class="ropt font_mono">mono</label></span>
 </span>
@@ -668,45 +661,11 @@ Move Nodes by <em>dragging</em>. Double-click a Node to reset, or: <button type=
 
 </main>
 
-<hr class="ad_divider" />
-<div class="ad_center">
-</div>
-
 <footer class="footer vs align-center reset-fonts">
-  <div class="callout-container pad-medium">
-  <span class="indented">If you find SankeyMATIC useful, please consider <a href="../about/" class="internal-link" title="(new window) About SankeyMATIC and how to support the site" target="_blank">donating to support further development</a>. Thanks!</span>
-  </div>
   <div class="footer__inner hs-md-vs align-center space-around">
-    <div class="footer__content text_left">
-    <p>
-    Follow:
-  🦣&nbsp;<strong><a href="https://vis.social/@SankeyMATIC" title="(new window) SankeyMATIC's Mastodon account" target="_blank" rel="noopener me">@SankeyMATIC@vis.social</a></strong>
-    </p>
-    <p>
-    <strong>SankeyMATIC</strong> is produced by
-  <a href="http://nowthis.com/" title="(new window) Steve's personal site" target="_blank" rel="noopener">Steve Bogart</a>
-  <small>(🦣&nbsp;<a href="https://tilde.zone/@nowthis" title="(new window) Steve's Mastodon account" target="_blank" rel="noopener">@nowthis@tilde.zone</a>)</small>.
-    </p>
-    <p>
-  <small><a href="https://github.com/nowthis/sankeymatic" title="(new window) SankeyMATIC source code at GitHub" target="_blank" rel="noopener"><strong>Source code</strong> is available</a> at GitHub.<br>
-  SankeyMATIC builds on the open source tool <a href="http://d3js.org/" title="(new window) D3's home page" target="_blank" rel="noopener">D3.js</a><br>
-  &amp; a modified version of its <a href="https://github.com/d3/d3-sankey" title="(new window) The D3 Sankey plugin at GitHub" target="_blank" rel="noopener">Sankey plugin</a>.
-    </small>
-    </p>
-  <p><a href="/privacy/">Privacy Policy</a></p>
+    <div class="footer__content text_center">
+    <p><small>Based on <a href="https://github.com/nowthis/sankeymatic" title="SankeyMATIC source code" target="_blank" rel="noopener">SankeyMATIC</a> by Steve Bogart (ISC License)</small></p>
     </div>
-
-    <div class="footer__nav">
-    <ul class="hs-sm-vs align-center">
-    <li><a title="SankeyMATIC home page" href="/">Home</a></li>
-    <li><a title="What's New with SankeyMATIC" href="/news/">News</a></li>
-    <li><a href="/data/" title="Interesting Diagrams from the Real World">Data</a></li>
-    <li><a title="Gallery of SankeyMATIC Examples" href="/gallery/">Gallery</a></li>
-    <li><a title="How to use SankeyMATIC to the fullest" href="/manual/">Manual</a></li>
-    <li><a title="About SankeyMATIC and how to support the site" href="/about/">About</a></li>
-    </ul>
-    </div>
-
   </div>
 </footer>
 
