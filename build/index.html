@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1">
-<title>SankeyMATIC: Build a Sankey Diagram</title>
+<title>H&C Sankey Builder</title>
 <link rel="stylesheet" href="build.css">
 <script defer src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/canvg@3/lib/umd.js" crossorigin="anonymous"></script>
@@ -30,17 +30,9 @@
 <body>
 <header class="header vs f-middle">
   <nav class="header__nav hs-sm-vs space-between">
-  <a href="/" title="SankeyMATIC home page" class="header__logo hs f-middle align-center"><img alt="SankeyMATIC logo" src="i/SKM-trsp-300.png" height="27" width="27" class="skm_logo_small" />&nbsp;SankeyMATIC</a>
-  <ul class="header__links hs f-middle">
-    <li><a href="/news/" title="What's New with SankeyMATIC">News</a></li>
-    <li><a href="/data/" title="Interesting Diagrams from the Real World">Data</a></li>
-    <li><a href="/gallery/" title="Gallery of SankeyMATIC Examples">Gallery</a></li>
-    <li><a href="/manual/" title="How to use SankeyMATIC to the fullest">Manual</a></li>
-    <li><a href="/about/" title="About SankeyMATIC and how to support the site">About</a></li>
-  </ul>
+  <span class="header__logo hs f-middle align-center">&nbsp;H&amp;C Sankey Builder</span>
   </nav>
 </header>
-<div class="callout-container pad-small">If you find SankeyMATIC useful, please consider <a href="../about/" class="internal-link" title="(new window) About SankeyMATIC and how to support the site" target="_blank">donating to support further development</a>. Thanks!</div>
 
 <main>
 <div id="example_diagrams" class="text_center">
@@ -355,6 +347,9 @@ Nodes<span id="node_options_hint">:</span></h2>
 <span class="no_wrap"><label for="node_border" class="spaced_label"><strong>Border:</strong></label>
 <input id="node_border" type="number" class="number_10s" min="0" value="0" step="1" onchange="process_sankey();"></span>
 
+<span class="no_wrap"><label for="node_radius" class="spaced_label"><strong>Radius:</strong></label>
+<input id="node_radius" type="number" class="number_10s" min="0" value="0" step="1" onchange="process_sankey();" title="Corner radius for rounded nodes"></span>
+
 <span class="no_wrap" onmouseover="revealVal('node_opacity');" onmouseout="fadeVal('node_opacity');">
 <label for="node_opacity" class="spaced_label"><strong>Opacity:</strong></label>
 <span class="smalllabel">0</span><span class="output_container"><input id="node_opacity" class="slider_xxsmall" type="range" min="0" max="1" step="0.05" value="1.0" onfocus="revealVal('node_opacity');" onblur="fadeVal('node_opacity');" oninput="updateOutput('node_opacity'); process_sankey();" onchange="process_sankey();"><output id="node_opacity_val" for="node_opacity" class="fade-init output_3">-</output></span><span class="smalllabel">1</span></span>
@@ -569,6 +564,84 @@ Diagram Scales match as closely as possible.
     <button onclick="closeDialog('getLink');" id="closeDialogFooter">Close</button>
   </footer>
 </dialog>
+
+<!-- Color Picker Dialog -->
+<dialog id="colorPickerDialog">
+  <header>
+    <h3 id="colorPickerTitle">Choose Color</h3>
+    <button onclick="closeColorPicker();" class="dialog-close">&#x2715;</button>
+  </header>
+  <section>
+    <div class="color-picker-section">
+      <div class="color-picker-label">H&amp;C Theme Colors</div>
+      <div class="color-grid theme-colors">
+        <button class="color-swatch" data-color="#14324E" style="background:#14324E" title="H&C Blue"></button>
+        <button class="color-swatch" data-color="#E94D3A" style="background:#E94D3A" title="H&C Warm Red"></button>
+        <button class="color-swatch" data-color="#5B5D64" style="background:#5B5D64" title="Grey"></button>
+        <button class="color-swatch" data-color="#000000" style="background:#000000" title="Black"></button>
+        <button class="color-swatch" data-color="#FFFFFF" style="background:#FFFFFF; border: 1px solid #ccc;" title="White"></button>
+      </div>
+      <div class="color-grid theme-colors">
+        <button class="color-swatch" data-color="#1D4360" style="background:#1D4360" title="Blue 90"></button>
+        <button class="color-swatch" data-color="#EF624F" style="background:#EF624F" title="Red 90"></button>
+        <button class="color-swatch" data-color="#696C72" style="background:#696C72" title="Grey 90"></button>
+        <button class="color-swatch" data-color="#345671" style="background:#345671" title="Blue 80"></button>
+        <button class="color-swatch" data-color="#F37663" style="background:#F37663" title="Red 80"></button>
+      </div>
+      <div class="color-grid theme-colors">
+        <button class="color-swatch" data-color="#4C6982" style="background:#4C6982" title="Blue 70"></button>
+        <button class="color-swatch" data-color="#F78877" style="background:#F78877" title="Red 70"></button>
+        <button class="color-swatch" data-color="#797B81" style="background:#797B81" title="Grey 80"></button>
+        <button class="color-swatch" data-color="#647C93" style="background:#647C93" title="Blue 60"></button>
+        <button class="color-swatch" data-color="#FB9B8A" style="background:#FB9B8A" title="Red 60"></button>
+      </div>
+      <div class="color-grid theme-colors">
+        <button class="color-swatch" data-color="#7C93A5" style="background:#7C93A5" title="Blue 50"></button>
+        <button class="color-swatch" data-color="#FDAC9E" style="background:#FDAC9E" title="Red 50"></button>
+        <button class="color-swatch" data-color="#898A90" style="background:#898A90" title="Grey 70"></button>
+        <button class="color-swatch" data-color="#95A8B6" style="background:#95A8B6" title="Blue 40"></button>
+        <button class="color-swatch" data-color="#FEBCB0" style="background:#FEBCB0" title="Red 40"></button>
+      </div>
+      <div class="color-grid theme-colors">
+        <button class="color-swatch" data-color="#B0BDC8" style="background:#B0BDC8" title="Blue 30"></button>
+        <button class="color-swatch" data-color="#FFCEC5" style="background:#FFCEC5" title="Red 30"></button>
+        <button class="color-swatch" data-color="#999A9F" style="background:#999A9F" title="Grey 60"></button>
+        <button class="color-swatch" data-color="#CAD3DB" style="background:#CAD3DB" title="Blue 20"></button>
+        <button class="color-swatch" data-color="#FFDED7" style="background:#FFDED7" title="Red 20"></button>
+      </div>
+      <div class="color-grid theme-colors">
+        <button class="color-swatch" data-color="#E4E9EE" style="background:#E4E9EE" title="Blue 10"></button>
+        <button class="color-swatch" data-color="#FFEFEC" style="background:#FFEFEC" title="Red 10"></button>
+        <button class="color-swatch" data-color="#A9AAAE" style="background:#A9AAAE" title="Grey 50"></button>
+        <button class="color-swatch" data-color="#BABBBE" style="background:#BABBBE" title="Grey 40"></button>
+        <button class="color-swatch" data-color="#EDEEEE" style="background:#EDEEEE" title="Grey 10"></button>
+      </div>
+    </div>
+    <div class="color-picker-section">
+      <div class="color-picker-label">Standard Colors</div>
+      <div class="color-grid standard-colors">
+        <button class="color-swatch" data-color="#C00000" style="background:#C00000" title="Dark Red"></button>
+        <button class="color-swatch" data-color="#FF0000" style="background:#FF0000" title="Red"></button>
+        <button class="color-swatch" data-color="#FFC000" style="background:#FFC000" title="Orange"></button>
+        <button class="color-swatch" data-color="#FFFF00" style="background:#FFFF00" title="Yellow"></button>
+        <button class="color-swatch" data-color="#92D050" style="background:#92D050" title="Light Green"></button>
+        <button class="color-swatch" data-color="#00B050" style="background:#00B050" title="Green"></button>
+        <button class="color-swatch" data-color="#00B0F0" style="background:#00B0F0" title="Light Blue"></button>
+        <button class="color-swatch" data-color="#0070C0" style="background:#0070C0" title="Blue"></button>
+        <button class="color-swatch" data-color="#002060" style="background:#002060" title="Dark Blue"></button>
+        <button class="color-swatch" data-color="#7030A0" style="background:#7030A0" title="Purple"></button>
+      </div>
+    </div>
+    <div class="color-picker-section">
+      <div class="color-picker-label">Custom Color</div>
+      <div class="hs gap-small align-center">
+        <input type="color" id="customColorInput" value="#14324E">
+        <button id="applyCustomColor" class="loadsave_button" onclick="applyCustomColor();">Apply</button>
+      </div>
+    </div>
+  </section>
+</dialog>
+
 </div>
 </div>
 
@@ -668,45 +741,13 @@ Move Nodes by <em>dragging</em>. Double-click a Node to reset, or: <button type=
 
 </main>
 
-<hr class="ad_divider" />
-<div class="ad_center">
-</div>
-
 <footer class="footer vs align-center reset-fonts">
-  <div class="callout-container pad-medium">
-  <span class="indented">If you find SankeyMATIC useful, please consider <a href="../about/" class="internal-link" title="(new window) About SankeyMATIC and how to support the site" target="_blank">donating to support further development</a>. Thanks!</span>
-  </div>
   <div class="footer__inner hs-md-vs align-center space-around">
-    <div class="footer__content text_left">
+    <div class="footer__content text_center">
     <p>
-    Follow:
-  🦣&nbsp;<strong><a href="https://vis.social/@SankeyMATIC" title="(new window) SankeyMATIC's Mastodon account" target="_blank" rel="noopener me">@SankeyMATIC@vis.social</a></strong>
+  <small>Based on <a href="https://github.com/nowthis/sankeymatic" title="(new window) SankeyMATIC source code at GitHub" target="_blank" rel="noopener"><strong>SankeyMATIC</strong></a> by Steve Bogart, built with <a href="http://d3js.org/" title="(new window) D3's home page" target="_blank" rel="noopener">D3.js</a>.</small>
     </p>
-    <p>
-    <strong>SankeyMATIC</strong> is produced by
-  <a href="http://nowthis.com/" title="(new window) Steve's personal site" target="_blank" rel="noopener">Steve Bogart</a>
-  <small>(🦣&nbsp;<a href="https://tilde.zone/@nowthis" title="(new window) Steve's Mastodon account" target="_blank" rel="noopener">@nowthis@tilde.zone</a>)</small>.
-    </p>
-    <p>
-  <small><a href="https://github.com/nowthis/sankeymatic" title="(new window) SankeyMATIC source code at GitHub" target="_blank" rel="noopener"><strong>Source code</strong> is available</a> at GitHub.<br>
-  SankeyMATIC builds on the open source tool <a href="http://d3js.org/" title="(new window) D3's home page" target="_blank" rel="noopener">D3.js</a><br>
-  &amp; a modified version of its <a href="https://github.com/d3/d3-sankey" title="(new window) The D3 Sankey plugin at GitHub" target="_blank" rel="noopener">Sankey plugin</a>.
-    </small>
-    </p>
-  <p><a href="/privacy/">Privacy Policy</a></p>
     </div>
-
-    <div class="footer__nav">
-    <ul class="hs-sm-vs align-center">
-    <li><a title="SankeyMATIC home page" href="/">Home</a></li>
-    <li><a title="What's New with SankeyMATIC" href="/news/">News</a></li>
-    <li><a href="/data/" title="Interesting Diagrams from the Real World">Data</a></li>
-    <li><a title="Gallery of SankeyMATIC Examples" href="/gallery/">Gallery</a></li>
-    <li><a title="How to use SankeyMATIC to the fullest" href="/manual/">Manual</a></li>
-    <li><a title="About SankeyMATIC and how to support the site" href="/about/">About</a></li>
-    </ul>
-    </div>
-
   </div>
 </footer>
 

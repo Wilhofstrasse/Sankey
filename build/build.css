@@ -1,31 +1,77 @@
 :root {
-  --nav-level-1-bg: #013355;
-  --deep-blue: #036;
-  --dark-blue: #047;
-  --secondary-background: #057;
-  --medium-blue: #069;
-  --button-blue: #10afff;
-  --light-blue: #27a;
-  --lighter-blue: #5ec9ff;
-  --gray-blue: #9ac;
-  --pale-blue-0: #c0eaff;
-  --pale-blue-1: #e7f7ff;
+  /* H&C Brand Colors */
+  --hc-blue: #14324E;
+  --hc-warm-red: #E94D3A;
 
-  --bg-medium: #bdf;
-  --bg-light: #def;
-  --bg-pale: #eef7ff;
-  --bg-palest: #fbfeff;
-  --bg-pale-warning: #fffff8;
-  --bg-attention: #e3ff9f;
-  --bg-plain-primary: #e6e6e6;
-  --bg-plain-secondary: #f8f8f8;
+  /* H&C Blue Scale */
+  --hc-blue-100: #14324E;
+  --hc-blue-90: #1D4360;
+  --hc-blue-80: #345671;
+  --hc-blue-70: #4C6982;
+  --hc-blue-60: #647C93;
+  --hc-blue-50: #7C93A5;
+  --hc-blue-40: #95A8B6;
+  --hc-blue-30: #B0BDC8;
+  --hc-blue-20: #CAD3DB;
+  --hc-blue-10: #E4E9EE;
 
-  --selected-option: #00557f;
-  --warning: darkred;
+  /* H&C Warm Red Scale */
+  --hc-red-100: #E94D3A;
+  --hc-red-90: #EF624F;
+  --hc-red-80: #F37663;
+  --hc-red-70: #F78877;
+  --hc-red-60: #FB9B8A;
+  --hc-red-50: #FDAC9E;
+  --hc-red-40: #FEBCB0;
+  --hc-red-30: #FFCEC5;
+  --hc-red-20: #FFDED7;
+  --hc-red-10: #FFEFEC;
 
-  --gray60: #999;
-  --lighter-gray: #f1f5f9;
-  --text-plain: #333;
+  /* H&C Grey Scale */
+  --hc-grey-100: #5B5D64;
+  --hc-grey-90: #696C72;
+  --hc-grey-80: #797B81;
+  --hc-grey-70: #898A90;
+  --hc-grey-60: #999A9F;
+  --hc-grey-50: #A9AAAE;
+  --hc-grey-40: #BABBBE;
+  --hc-grey-30: #CBCBCE;
+  --hc-grey-20: #DCDCDE;
+  --hc-grey-10: #EDEEEE;
+
+  /* H&C Neutrals */
+  --hc-black: #000000;
+  --hc-white: #FFFFFF;
+  --hc-light-bg: #F0F0F0;
+
+  /* Mapped UI Colors (using H&C palette) */
+  --nav-level-1-bg: var(--hc-blue-100);
+  --deep-blue: var(--hc-blue-100);
+  --dark-blue: var(--hc-blue-90);
+  --secondary-background: var(--hc-blue-80);
+  --medium-blue: var(--hc-blue-70);
+  --button-blue: var(--hc-blue-60);
+  --light-blue: var(--hc-blue-50);
+  --lighter-blue: var(--hc-blue-40);
+  --gray-blue: var(--hc-blue-30);
+  --pale-blue-0: var(--hc-blue-20);
+  --pale-blue-1: var(--hc-blue-10);
+
+  --bg-medium: var(--hc-blue-20);
+  --bg-light: var(--hc-blue-10);
+  --bg-pale: var(--hc-grey-10);
+  --bg-palest: var(--hc-white);
+  --bg-pale-warning: var(--hc-red-10);
+  --bg-attention: var(--hc-red-10);
+  --bg-plain-primary: var(--hc-grey-20);
+  --bg-plain-secondary: var(--hc-grey-10);
+
+  --selected-option: var(--hc-blue-100);
+  --warning: var(--hc-warm-red);
+
+  --gray60: var(--hc-grey-60);
+  --lighter-gray: var(--hc-grey-10);
+  --text-plain: var(--hc-grey-100);
 
   --border-base: 1px solid var(--medium-blue);
   --border-dark: 1px solid var(--deep-blue);
@@ -42,8 +88,8 @@
 
 body {
   font-size: small;
-  font-family: sans-serif;
-  background-color: #FBFDFD;
+  font-family: Calibri, "Calibri Light", sans-serif;
+  background-color: var(--hc-white);
   margin: 0;
 }
 
@@ -162,7 +208,7 @@ be shown, not the size of the slider. */
 .slider_medium + .output_9 { left: 1.9em; }
 .slider_medium + .output_12 { left: 1.3em; }
 
-.font_sans { font-family: sans-serif; }
+.font_sans { font-family: Calibri, "Calibri Light", sans-serif; }
 .font_serif { font-family: serif; }
 .font_mono { font-family: monospace; }
 
@@ -376,7 +422,7 @@ dfn {
   border: var(--border-base);
   padding: 0.25em;
   margin: 0.25em;
-  font-family: sans-serif;
+  font-family: Calibri, "Calibri Light", sans-serif;
   font-size: small;
   vertical-align: middle;
 }
@@ -974,7 +1020,7 @@ hr.ad_divider { border-top: 4px double var(--medium-blue); }
 }
 
 .reset-fonts {
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: Calibri, "Calibri Light", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: initial;
 }
 
@@ -1093,6 +1139,119 @@ fieldset.simple {
 .diagram_export   { grid-area: export; }
 .diagram_main     { grid-area: main; }
 .diagram_about    { grid-area: about; }
+
+/* Color Picker Dialog */
+#colorPickerDialog {
+  box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.3);
+  border-radius: 0.75em;
+  border: 2px solid var(--hc-blue-100);
+  padding: 0;
+  min-width: 280px;
+}
+
+#colorPickerDialog::backdrop {
+  opacity: 0.4;
+  background-color: #000;
+}
+
+#colorPickerDialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--hc-blue-100);
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 0.5em 0.5em 0 0;
+}
+
+#colorPickerDialog header h3 {
+  margin: 0;
+  font-size: 1em;
+}
+
+#colorPickerDialog .dialog-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  padding: 0.2em;
+}
+
+#colorPickerDialog .dialog-close:hover {
+  color: var(--hc-red-100);
+}
+
+#colorPickerDialog section {
+  padding: 1em;
+}
+
+.color-picker-section {
+  margin-bottom: 1em;
+}
+
+.color-picker-section:last-child {
+  margin-bottom: 0;
+}
+
+.color-picker-label {
+  font-weight: bold;
+  font-size: 0.85em;
+  color: var(--hc-grey-100);
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid var(--hc-grey-20);
+  padding-bottom: 0.25em;
+}
+
+.color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--hc-grey-40);
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.color-swatch:focus {
+  outline: 2px solid var(--hc-blue-100);
+  outline-offset: 1px;
+}
+
+.color-swatch.selected {
+  outline: 3px solid var(--hc-warm-red);
+  outline-offset: 1px;
+}
+
+#customColorInput {
+  width: 60px;
+  height: 30px;
+  border: 1px solid var(--hc-grey-40);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Make nodes and flows clickable for color picker */
+.node rect {
+  cursor: pointer;
+}
+
+.sankey_flow {
+  cursor: pointer;
+}
 
 /* media query land */
 
